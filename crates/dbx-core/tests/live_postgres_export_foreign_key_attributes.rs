@@ -26,9 +26,9 @@ fn config(id: &str, database: &str) -> ConnectionConfig {
 async fn child_before_parent(database: &str) -> Result<(), String> {
     let mut connection = tokio_postgres::Config::new();
     connection
-        .host(&std::env::var("DBX_LIVE_POSTGRES_EXPORT_HOST").unwrap())
+        .host(std::env::var("DBX_LIVE_POSTGRES_EXPORT_HOST").unwrap())
         .port(std::env::var("DBX_LIVE_POSTGRES_EXPORT_PORT").unwrap().parse().unwrap())
-        .user(&std::env::var("DBX_LIVE_POSTGRES_EXPORT_USER").unwrap())
+        .user(std::env::var("DBX_LIVE_POSTGRES_EXPORT_USER").unwrap())
         .password(std::env::var("DBX_LIVE_POSTGRES_EXPORT_PASSWORD").unwrap_or_default())
         .dbname(database);
     let (client, driver) = connection.connect(tokio_postgres::NoTls).await.unwrap();
